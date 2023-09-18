@@ -7,7 +7,6 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use('/', routes)
-//app.use('/api/auth', require('./routes/auth.routes'))
 
 export async function start() {
   try{

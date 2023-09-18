@@ -3,7 +3,6 @@ import './assets/main.css'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import Notifications from '@kyvg/vue3-notification'
-// import Vue from 'vue'
 import VueCookies from 'vue-cookies'
 
 import App from './App.vue'

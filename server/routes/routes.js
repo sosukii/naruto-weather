@@ -13,19 +13,16 @@ router.post('/registration',
     check('email','Некорректный e-mail').isEmail(),
     check('password','Пароль должен содержать не менее 3-х символов, но не более 12-ти символов').isLength({min:3,max:12})
   ],
-  async (req, res)=>{
-    console.log('registration endpoint')
-    console.log('request: ', req.body)
-
+  async (req, res) => {
     try{
       const errors = validationResult(req)
-      if(!errors.isEmpty()){
+      if(!errors.isEmpty()) {
         return res.status(400).json({message:'Некорректные данные при регистрации', errors:errors.array()})
       }
 
       const {email, password, name} = req.body
       const candidate = await User.findOne({email})
-      if (candidate){
+      if (candidate) {
         return res.status(400).json({message:`Пользователь с e-mail (${email}) уже существует.`})
       }
       const hashPassword = await bcrypt.hash(password, 7)
@@ -35,8 +32,7 @@ router.post('/registration',
 
       return res.status(200).json({message:'Пользователь создан.'})
     }catch (e){
-      console.log(e)
-      res.send({message: 'Server error... sad...'})
+      res.send({message: 'Серверная ошибка, попробуйте позже'})
     }
   }
 )
@@ -45,17 +41,17 @@ router.post('/login', async(req, res)=>{
     const {email, password} = req.body
     const user = await User.findOne({email})
 
-    if(!user){
+    if(!user) {
       return res.status(404).json({message:'Пользователь с таким e-mail не найден'})
     }
 
     const isPasswordValid = bcrypt.compareSync(password,user.password)
-    if(!isPasswordValid){
+    if(!isPasswordValid) {
       return res.status(400).json({message:'Неверный пароль.'})
     }
 
     const token = jwt.sign({id: user.id, roles: user.roles}, config.get('secretKey'),{expiresIn: '12h'})
-console.log(token)
+
     return res.json({
       token,
       user: {
@@ -64,8 +60,7 @@ console.log(token)
       },
       message: 'Вход в аккаунт - успешно!'
     })
-  }catch (e){
-    console.log(e)
-    res.send({message: 'Server error... sad...'})
+  }catch (e) {
+    res.send({message: 'Серверная ошибка, попробуйте позже'})
   }
 })

@@ -18,11 +18,8 @@
 
 <script setup>
   import { ref} from 'vue'
-  // import { useUserStore } from '@/stores/user';
   import {register} from '../api/register'
   import { notify } from "@kyvg/vue3-notification";
-
-  // const userStore = useUserStore();
 
   const userData = ref({
     name: '',
@@ -30,8 +27,6 @@
     password: ''
   })
   async function registerHandler() {
-    // userStore.registerUser({...userData.value});
-
     const result = await register({...userData.value})
     const data = await result.json()
 

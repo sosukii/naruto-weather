@@ -16,5 +16,5 @@ module.exports = {
     "commonjs": true,
     "browser": true,
     "es6": true
-},
+  },
 }

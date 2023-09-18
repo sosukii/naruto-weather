@@ -9,14 +9,13 @@
   </header>
 
   <RouterView />
-  <notifications />
 </template>
 
 <script setup>
   import { RouterLink, RouterView, useRouter } from 'vue-router'
-  import {computed, onMounted} from 'vue'
-  import {useUserStore} from './stores/user'
-  import {removeAuthTokenFromCookies, isAuthenticated} from './api/login'
+  import { computed, onMounted } from 'vue'
+  import { useUserStore } from './stores/user'
+  import { removeAuthTokenFromCookies, isAuthenticated } from './api/login'
 
   const userStore = useUserStore();
   const router = useRouter();

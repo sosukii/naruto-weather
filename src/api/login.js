@@ -27,9 +27,9 @@ export async function login(userData) {
       },
       body: JSON.stringify(userData)
     })
-    console.log('fetch login: ', response)
+
     return response
   } catch(e) {
-    console.log('не получился логин')
+    return null
   }
 }
