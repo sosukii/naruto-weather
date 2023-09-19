@@ -2,6 +2,7 @@
   <header>
     <nav>
       <RouterLink to="/">Home</RouterLink>
+      <RouterLink to="/weather">Weather</RouterLink>
       <RouterLink v-if="!isUserAuthenticated" to="/register">Register</RouterLink>
       <RouterLink v-if="!isUserAuthenticated" to="/login">Login</RouterLink>
       <button v-if="isUserAuthenticated" @click="logout">Logout</button>
