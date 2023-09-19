@@ -9,6 +9,7 @@
   </header>
 
   <RouterView />
+  <notifications />
 </template>
 
 <script setup>

@@ -15,11 +15,14 @@
 
 <script setup>
   import { ref} from 'vue'
+  import { useRouter } from 'vue-router';
   import { login } from '../api/login'
   import { notify } from "@kyvg/vue3-notification";
   import { setAuthTokenToCookies } from '../api/login'
+  import { redirectTo } from '../api/redirect'
   import { useUserStore } from '../stores/user'
 
+  const router = useRouter();
   const userData = ref({
     email: '',
     password: ''
@@ -33,7 +36,7 @@
       setAuthTokenToCookies(data.token)
       const userStore = useUserStore();
       userStore.setIsAuthenticated(true);
-      // await redirectTo('/', router);
+      await redirectTo('/', router);
     }
 
     notify({
