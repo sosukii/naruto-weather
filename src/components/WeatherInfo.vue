@@ -14,7 +14,13 @@
       <label for="five">5</label>
 
       <button type="submit">Get weather!</button>
+      <button @click="addCityToFavorites">Add city to favorites</button>
     </form>
+
+    <div class="favorites">
+      Favorites cities:
+      <div v-for="city in favoritesCities" :key="city">{{ city }}</div>
+    </div>
 
     <div class="weather">
       <div v-for="day in weatherData.slice(0, daysCount)" :key="day[0].dt_txt" class="cards">
@@ -49,6 +55,7 @@
   const town = ref('Tomsk')
   let oldTownValue = ''
   const history = ref([])
+  const favoritesCities = ref([])
 
   const weatherData = ref([])
   const daysCount = ref('1')
@@ -114,6 +121,11 @@
 
   function clearHistory() {
     history.value = []
+  }
+  function addCityToFavorites(){
+    if(!favoritesCities.value.includes(town.value)){
+      favoritesCities.value.push(town.value)
+    }
   }
 
   setInterval(() => {
