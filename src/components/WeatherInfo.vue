@@ -17,7 +17,7 @@
     </form>
 
     <div class="weather">
-      <div v-for="day in weatherData.slice(0, daysCount)" :key="city" class="cards">
+      <div v-for="day in weatherData.slice(0, daysCount)" :key="day[0].dt_txt" class="cards">
         <p>Date: {{ (day[0].dt_txt).split(' ')[0] }}</p>
         <div v-for="weather in day" :key="weather" class="card">
           <p class="card__date">{{ formatTime(new Date(weather.dt_txt)) }}</p>
@@ -27,7 +27,6 @@
         </div>
         <hr>
       </div>
-
     </div>
   </div>
 </template>
@@ -38,17 +37,30 @@
   import { getCityGeoTags, getWeatherByCoordinates } from '../api/weather'
 
   const town = ref('Tomsk')
+  let oldTownValue = ''
+
   const weatherData = ref([])
   const daysCount = ref('1')
+
+  const requestCount = ref(0)
+  const REQUEST_LIMIT = 16
 
   let cities = {}
 
   async function weatherHandler() {
     const cityName = town.value ? town.value : 'Tomsk'
+    if(cityName === oldTownValue) return
 
     const resultGeo = await getCityGeoTags(cityName)
-    const { lat, lon } = resultGeo[0]
 
+    if(resultGeo.length === 0) {
+      notify({
+        text: `Cannot find city with name ${town.value}`,
+      });
+      return
+    }
+
+    const { lat, lon } = resultGeo[0]
     const resultWeather = await getWeatherByCoordinates(lat, lon)
 
     if(+resultWeather.cod !== 200) {
@@ -57,6 +69,15 @@
       });
       return
     }
+
+    oldTownValue = cityName
+    if(requestCount.value >= REQUEST_LIMIT) {
+      notify({
+        text: 'Register to remove limit request 🐈',
+      });
+      return
+    }
+    requestCount.value +=1
 
     cities = {}
     resultWeather.list.forEach(obj => {
@@ -78,6 +99,10 @@
 
     return `${hours}:${minutes}`
   }
+
+  setInterval(() => {
+    requestCount.value = 0;
+  }, 60 * 60 * 1000);
 
   onMounted(() => weatherHandler());
 </script>
