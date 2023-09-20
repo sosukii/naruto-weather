@@ -1,17 +1,31 @@
 <template>
   <div>
-    <form @submit.prevent="weatherHandler">
-      <input class="input" v-model="town" type="text" placeholder="Tomsk" required>
-      <div>Weather for {{ town }}, {{ daysCount }} day(s)</div>
+    <form class="form" @submit.prevent="weatherHandler">
+      <div>Selected options: weather in {{ town }}, for {{ daysCount }} day(s)</div>
 
-      <input type="radio" id="one" value="1" v-model="daysCount" />
-      <label for="one">1</label>
+      <div class="form__block">
+        <label for="cityinput">Enter city:</label>
+        <input class="input" v-model="town" type="text" placeholder="Tomsk" required id="cityinput">
+      </div>
 
-      <input type="radio" id="three" value="3" v-model="daysCount" />
-      <label for="three">3</label>
+      <div class="wrapperDaysCount">
+        <p class="wrapperDaysCount__title">Select days:</p>
+        <div class="wrapperDaysCount__content">
+          <div class="wrapperDaysCount__content__item">
+            <input type="radio" id="one" value="1" v-model="daysCount" />
+            <label for="one">1</label>
+          </div>
+          <div class="wrapperDaysCount__content__item">
+            <input type="radio" id="three" value="3" v-model="daysCount" />
+            <label for="three">3</label>
+          </div>
+          <div class="wrapperDaysCount__content__item">
+            <input type="radio" id="five" value="5" v-model="daysCount" />
+            <label for="five">5</label>
+          </div>
+        </div>
+      </div>
 
-      <input type="radio" id="five" value="5" v-model="daysCount" />
-      <label for="five">5</label>
 
       <button class="btn" type="submit">Get weather!</button>
       <button class="btn" @click="addCityToFavorites">Add city to favorites</button>
@@ -136,14 +150,39 @@
 </script>
 
 <style scoped lang="sass">
-
+.form
+  padding-top: 25px
+  display: flex
+  flex-direction: column
+  gap: 14px
+  align-items: center
+  &__block
+    display: flex
+    flex-direction: column
+.wrapperDaysCount
+  display: flex
+  gap: 14px
+  &__content
+    display: flex
+    gap: 14px
+    &__item
+      display: flex
+      gap: 3px
 .weather
   display: flex
   flex-wrap: wrap
+  justify-content: center
+  gap: 10px
   .cards
-    border: 2px solid blue
+    border: 1px solid orange
+    border-radius: 4px
+    box-shadow: rgba(255, 196, 0, 0.9) 0px 2px 8px 0px
     margin-bottom: 10px
     width: 250px
+    display: flex
+    flex-direction: column
+
     .card
-      border: 2px solid red
+      padding: 10px 5px
+      box-shadow: 0px 15px 10px -15px blue
 </style>

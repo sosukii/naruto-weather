@@ -51,6 +51,7 @@
 
 <style scoped lang="sass">
 .form
+  padding-top: 25px
   display: flex
   flex-direction: column
   gap: 14px
