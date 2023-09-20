@@ -32,6 +32,7 @@
     <div class="history">
       History of request:
       <div v-for="sity in history.slice(1)" :key="sity">{{ sity }}</div>
+      <button @click="clearHistory">clear history</button>
     </div>
   </div>
 </template>
@@ -109,6 +110,10 @@
     const minutes = (date.getMinutes()+'').length === 1 ? `0${date.getMinutes()}` : date.getMinutes()
 
     return `${hours}:${minutes}`
+  }
+
+  function clearHistory() {
+    history.value = []
   }
 
   setInterval(() => {
