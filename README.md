@@ -9,3 +9,16 @@
 - add .env file by path (/server/), place DB='mongodbconnectionstring' here (like DB='mongodb+srv://YOURE_DATA:YOURE_DATApass@CLUSTER_NAME.hzxvelx.mongodb.net/DB_NAME') if not exist
 - go to root path (cd ..)
 - run script 'start'
+
+
+Technologies stack:
+
+- code quality: eslint, prettier
+- start multiple scripts: concurrently
+- notify: @kyvg/vue3-notification
+- authenticated control: pinia
+
+- saving users: mongoDB
+- manage db: mongoose
+- manage password: bcryptjs, jsonwebtoken, express-validator
+- nodemon: live reloading server
