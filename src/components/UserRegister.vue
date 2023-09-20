@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Register page</h1>
     <form class="form" @submit.prevent="registerHandler">
+      <h1>Register to be the HOKAGE!</h1>
       <div class="form__block">
         <label for="name">Name:</label>
         <input class="input" v-model="userData.name">

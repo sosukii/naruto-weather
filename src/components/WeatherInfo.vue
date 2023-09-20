@@ -1,6 +1,7 @@
 <template>
   <div>
     <form class="form" @submit.prevent="weatherHandler">
+      <h1>Good weather to go for eat ramen!</h1>
       <div>Selected options: weather in {{ town }}, for {{ daysCount }} day(s)</div>
 
       <div class="form__block">

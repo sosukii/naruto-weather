@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h1>Login page</h1>
     <form class="form" @submit.prevent="loginHandler">
+      <h1>Ninja, Login!</h1>
       <div class="form__block">
         <label for="username">Email:</label>
         <input class="input" type="text" v-model="userData.email">
