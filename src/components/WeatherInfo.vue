@@ -32,9 +32,13 @@
 </template>
 
 <script setup>
-  import { ref, onMounted} from 'vue'
+  import { ref, computed, onMounted} from 'vue'
   import { notify } from "@kyvg/vue3-notification";
   import { getCityGeoTags, getWeatherByCoordinates } from '../api/weather'
+  import { useUserStore } from '../stores/user'
+
+  const userStore = useUserStore();
+  const isUserAuthenticated = computed(() => userStore.isAuthenticated);
 
   const town = ref('Tomsk')
   let oldTownValue = ''
@@ -43,7 +47,7 @@
   const daysCount = ref('1')
 
   const requestCount = ref(0)
-  const REQUEST_LIMIT = 16
+  const REQUEST_LIMIT = isUserAuthenticated.value? Infinity : 16
 
   let cities = {}
 
