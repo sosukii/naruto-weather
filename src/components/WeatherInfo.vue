@@ -28,6 +28,11 @@
         <hr>
       </div>
     </div>
+
+    <div class="history">
+      History of request:
+      <div v-for="sity in history.slice(1)" :key="sity">{{ sity }}</div>
+    </div>
   </div>
 </template>
 
@@ -42,6 +47,7 @@
 
   const town = ref('Tomsk')
   let oldTownValue = ''
+  const history = ref([])
 
   const weatherData = ref([])
   const daysCount = ref('1')
@@ -75,6 +81,7 @@
     }
 
     oldTownValue = cityName
+    history.value.push(cityName)
     if(requestCount.value >= REQUEST_LIMIT) {
       notify({
         text: 'Register to remove limit request 🐈',
