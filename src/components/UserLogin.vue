@@ -1,13 +1,15 @@
 <template>
   <div>
     <h1>Login page</h1>
-    <form @submit.prevent="loginHandler">
-      <label for="username">Email:</label>
-      <input class="input" type="text" v-model="userData.email">
-
-      <label for="password">Password:</label>
-      <input class="input" type="password" v-model="userData.password">
-
+    <form class="form" @submit.prevent="loginHandler">
+      <div class="form__block">
+        <label for="username">Email:</label>
+        <input class="input" type="text" v-model="userData.email">
+      </div>
+      <div class="form__block">
+        <label for="password">Password:</label>
+        <input class="input" type="password" v-model="userData.password">
+      </div>
       <button class="btn" type="submit">Login</button>
     </form>
   </div>
@@ -47,6 +49,13 @@
 
 </script>
 
-<style scoped>
-
+<style scoped lang="sass">
+.form
+  display: flex
+  flex-direction: column
+  gap: 14px
+  align-items: center
+  &__block
+    display: flex
+    flex-direction: column
 </style>
