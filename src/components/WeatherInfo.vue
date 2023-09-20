@@ -1,7 +1,7 @@
 <template>
   <div>
     <form @submit.prevent="weatherHandler">
-      <input v-model="town" type="text" placeholder="Tomsk" required>
+      <input class="input" v-model="town" type="text" placeholder="Tomsk" required>
       <div>Weather for {{ town }}, {{ daysCount }} day(s)</div>
 
       <input type="radio" id="one" value="1" v-model="daysCount" />
@@ -13,8 +13,8 @@
       <input type="radio" id="five" value="5" v-model="daysCount" />
       <label for="five">5</label>
 
-      <button type="submit">Get weather!</button>
-      <button @click="addCityToFavorites">Add city to favorites</button>
+      <button class="btn" type="submit">Get weather!</button>
+      <button class="btn" @click="addCityToFavorites">Add city to favorites</button>
     </form>
 
     <div class="favorites">
@@ -38,7 +38,7 @@
     <div class="history">
       History of request:
       <div v-for="sity in history.slice(1)" :key="sity">{{ sity }}</div>
-      <button @click="clearHistory">clear history</button>
+      <button class="btn" @click="clearHistory">clear history</button>
     </div>
   </div>
 </template>
@@ -136,6 +136,7 @@
 </script>
 
 <style scoped lang="sass">
+
 .weather
   display: flex
   flex-wrap: wrap

@@ -21,4 +21,31 @@ a,
   }
 }
 
+.input {
+  border-radius: 12px;
+  border: 1px solid orange;
+  padding: 12px;
+  outline: none;
+}
 
+.input:focus {
+  box-shadow: rgba(255, 196, 0, 0.609) 0px 2px 8px 0px;
+}
+
+.btn {
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  border: 1px solid orange;
+  background-color: transparent;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  cursor: pointer;
+  background-color:rgba(255, 196, 0, 0.138)
+}
+
+.btn:active {
+  background-color:rgba(255, 196, 0, 0.423)
+}

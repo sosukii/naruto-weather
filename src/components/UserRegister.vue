@@ -3,15 +3,15 @@
     <h1>Register page</h1>
     <form @submit.prevent="registerHandler">
       <label for="name">Name:</label>
-      <input v-model="userData.name">
+      <input class="input" v-model="userData.name">
 
       <label for="email">Email:</label>
-      <input type="email" v-model="userData.email" required>
+      <input class="input" type="email" v-model="userData.email" required>
 
       <label for="password">Password:</label>
-      <input type="password" v-model="userData.password" required>
+      <input class="input" type="password" v-model="userData.password" required>
 
-      <button type="submit">Register</button>
+      <button class="btn" type="submit">Register</button>
     </form>
   </div>
 </template>

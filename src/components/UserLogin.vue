@@ -3,12 +3,12 @@
     <h1>Login page</h1>
     <form @submit.prevent="loginHandler">
       <label for="username">Email:</label>
-      <input type="text" v-model="userData.email">
+      <input class="input" type="text" v-model="userData.email">
 
       <label for="password">Password:</label>
-      <input type="password" v-model="userData.password">
+      <input class="input" type="password" v-model="userData.password">
 
-      <button type="submit">Login</button>
+      <button class="btn" type="submit">Login</button>
     </form>
   </div>
 </template>
