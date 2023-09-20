@@ -1,15 +1,21 @@
 <template>
   <div>
     <h1>Register page</h1>
-    <form @submit.prevent="registerHandler">
-      <label for="name">Name:</label>
-      <input class="input" v-model="userData.name">
+    <form class="form" @submit.prevent="registerHandler">
+      <div class="form__block">
+        <label for="name">Name:</label>
+        <input class="input" v-model="userData.name">
+      </div>
 
-      <label for="email">Email:</label>
-      <input class="input" type="email" v-model="userData.email" required>
+      <div class="form__block">
+        <label for="email">Email:</label>
+        <input class="input" type="email" v-model="userData.email" required>
+      </div>
 
-      <label for="password">Password:</label>
-      <input class="input" type="password" v-model="userData.password" required>
+      <div class="form__block">
+        <label for="password">Password:</label>
+        <input class="input" type="password" v-model="userData.password" required>
+      </div>
 
       <button class="btn" type="submit">Register</button>
     </form>
@@ -62,6 +68,13 @@
 
 </script>
 
-<style scoped>
-
+<style scoped lang="sass">
+.form
+  display: flex
+  flex-direction: column
+  gap: 14px
+  align-items: center
+  &__block
+    display: flex
+    flex-direction: column
 </style>
