@@ -2,13 +2,32 @@
   <div>
     <form @submit.prevent="weatherHandler">
       <input v-model="town" type="text" placeholder="Tomsk" required>
+      <div>Weather for {{ town }}, {{ daysCount }} day(s)</div>
+
+      <input type="radio" id="one" value="1" v-model="daysCount" />
+      <label for="one">1</label>
+
+      <input type="radio" id="three" value="3" v-model="daysCount" />
+      <label for="three">3</label>
+
+      <input type="radio" id="five" value="5" v-model="daysCount" />
+      <label for="five">5</label>
+
       <button type="submit">Get weather!</button>
     </form>
-    <div v-if="isTownExist">
-      <h2>Weather for {{ town ? town : 'Tomsk' }}</h2>
-      <div>Temperature: {{ weatherData.temperature }}, {{ weatherData.description }}</div>
-      <div>Humidity: {{ weatherData.humidity }}</div>
-      <div>Wind speed: {{ weatherData.wind }}</div>
+
+    <div class="weather">
+      <div v-for="day in weatherData.slice(0, daysCount)" :key="city" class="cards">
+        <p>Date: {{ (day[0].dt_txt).split(' ')[0] }}</p>
+        <div v-for="weather in day" :key="weather" class="card">
+          <p class="card__date">{{ formatTime(new Date(weather.dt_txt)) }}</p>
+          <div>Temperature: {{ Math.round(weather.main.temp) }}°C, {{ weather.weather[0].description }}</div>
+          <div>Humidity: {{ weather.main.humidity }}%</div>
+          <div>Wind speed: {{ weather.wind.speed }} m/s</div>
+        </div>
+        <hr>
+      </div>
+
     </div>
   </div>
 </template>
@@ -16,40 +35,61 @@
 <script setup>
   import { ref, onMounted} from 'vue'
   import { notify } from "@kyvg/vue3-notification";
-  import { getWeather } from '../api/weather'
+  import { getCityGeoTags, getWeatherByCoordinates } from '../api/weather'
 
-  const town = ref('')
-  const isTownExist = ref(false)
-  const weatherData = ref({
-    temperature: '',
-    description: '',
-    humidity: '',
-    wind: '',
-    icon: ''
-  })
+  const town = ref('Tomsk')
+  const weatherData = ref([])
+  const daysCount = ref('1')
+
+  let cities = {}
 
   async function weatherHandler() {
-    const townName = town.value ? town.value : 'Tomsk'
+    const cityName = town.value ? town.value : 'Tomsk'
 
-    const result = await getWeather(townName)
+    const resultGeo = await getCityGeoTags(cityName)
+    const { lat, lon } = resultGeo[0]
 
-    if(result.cod === 200) {
-      isTownExist.value = true
+    const resultWeather = await getWeatherByCoordinates(lat, lon)
 
-      weatherData.value.temperature = `${Math.round(result.main.temp)}°C`
-      weatherData.value.description = result.weather[0].description
-      weatherData.value.humidity = `${result.main.humidity}%`
-      weatherData.value.wind = `${Math.round(result.wind.speed)} m/s`
-    } else {
+    if(+resultWeather.cod !== 200) {
       notify({
-      text: result.message,
-    });
+        text: 'Server error, try again',
+      });
+      return
     }
+
+    cities = {}
+    resultWeather.list.forEach(obj => {
+      const dateKey = new Date(obj.dt_txt).getDate()
+
+      if(cities[dateKey]) {
+        cities[dateKey].push(obj)
+      } else {
+        cities[dateKey] = [obj]
+      }
+    })
+
+    weatherData.value = Object.values(cities);
   }
 
+  function formatTime(date) {
+    const hours = (date.getHours()+'').length === 1 ? `0${date.getHours()}` : date.getHours()
+    const minutes = (date.getMinutes()+'').length === 1 ? `0${date.getMinutes()}` : date.getMinutes()
+
+    return `${hours}:${minutes}`
+  }
 
   onMounted(() => weatherHandler());
 </script>
 
-<style scoped>
+<style scoped lang="sass">
+.weather
+  display: flex
+  flex-wrap: wrap
+  .cards
+    border: 2px solid blue
+    margin-bottom: 10px
+    width: 250px
+    .card
+      border: 2px solid red
 </style>
